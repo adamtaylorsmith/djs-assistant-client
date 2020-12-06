@@ -1,38 +1,102 @@
-.App {
-  text-align: center;
+body {
+    font-family: 'Roboto', sans-serif;
+    background-image: url("https://multisportdecathlon.com/images/player.jpg");
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar-item {
+    font-size: 18px;
+    padding-left: 20px;
+    margin-top: 10px;
+    width: 120px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navi-link {
+    color:white;
+}
+.navi-link:hover {
+    text-decoration: none;
+    color: grey;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#brand {
+    font-size: 24px;
+    color: white;
+    padding-top: 15px;
+    padding-left: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.form-label {
+    color: white;
+    font-size: 24px;
+    padding-left: 46%;
+}
+#form-label-spec {
+    color: white;
+    font-size: 24px;
+    padding-left: 41%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input[type=text] {
+    width: 33%;
+    margin: auto;
+}
+input[type=email] {
+    width: 33%;
+    margin: auto;
+}
+input[type=number] {
+    width: 33%;
+    margin: auto;
+}
+#register-form {
+    padding-top: 30px;
+}
+#login-form {
+    padding-top: 30px;
+}
+
+h1 {
+    color: white;
+    text-align: center;
+    padding-top: 30px;
+}
+.form-button {
+    margin-left: 47%;
+}
+h3 {
+    color: white;
+}
+#plural {
+    margin-left: 30px;
+}
+table {
+    color: white;
+}
+th {
+    color: white;
+    font-size: 18px;
+    padding: 3px;
+}
+td {
+    color: white;
+    font-size: 16px;
+    padding: 3px;
+}
+#detailsbutton {
+    background-color: green;
+    color: white;
+    font-size: 16px;
+    margin-left: 10px;
+}
+#playtitle {
+    font-weight: 700;
+    font-size: 20px;
+    padding-right: 40px;
+}
+#floats {
+    width:70%;
+    margin-left:30%;
+}
+.block {
+    display: inline-block;
 }
