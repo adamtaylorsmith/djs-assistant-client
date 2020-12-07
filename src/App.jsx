@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.css';
 import './App.css';
+
 import NavigationComponent from './components/app/Navbar';
 import LoginComponent from './components/auth/Login';
 import RegisterComponent from './components/auth/Register';
@@ -33,11 +34,7 @@ function App() {
     localStorage.clear()
     setToken('')
     setIsLoggedIn(false)
-  }
-
-  // const clickLogout = () => {
-  //   postgres://jxsobpjdbgmnbs:71dae2becab7d526c6cf8170bae09863d1c9095f33c272250793f3ba99e4a9fd@ec2-54-161-150-170.compute-1.amazonaws.com:5432/d7s20ihefu27vv // 1150dj
-  // }
+  } 
 
       return (
       <>
@@ -48,7 +45,7 @@ function App() {
             <LoginComponent authenticateUser={authenticateUser} setActiveUsername={setActiveUsername} setActiveId={setActiveId} />
           </Route>
           <Route exact path='/user/register'>
-             <RegisterComponent authenticateUser={authenticateUser} setActiveUsername={setActiveUsername} setActiveId={setActiveId}/>
+             <RegisterComponent setActiveUsername={setActiveUsername} setActiveId={setActiveId}/>
           </Route>
           <Route exact path='/playlists'>
             <PlaylistsComponent activeUsername={activeUsername} activeId={activeId} setActivePlaylistId={setActivePlaylistId} activePlaylistId={activePlaylistId} token={token}/>
@@ -64,3 +61,65 @@ function App() {
 }
 
 export default App;
+
+
+// *******************   LEGACY   ***************************
+// ***************#   Version Dec6  #***************************
+
+// class App extends React.Component {
+//   constructor() {
+//     super()
+//       this.state = {
+//         token: "",
+//         isLoggedIn: false,
+//         activeUsername: "",
+//         activeId: 0,
+//         activePlaylistId: null
+//       }
+//   }
+
+//   componentDidMount() {
+//     if (window.localStorage.getItem('authToken')) {
+//       this.setState({token: window.localStorage.getItem('authToken')})
+//       this.setState({isLoggedIn: true})
+//     }
+//   }
+
+//   authenticateUser(token) {
+//     window.localStorage.getItem('authToken', token);
+//     this.setState({token: token})
+//     this.setState({isLoggedIn: true})
+//   }
+
+//   clickLogout() {
+//     localStorage.clear()
+//     this.setState({token: ""})
+//     this.setState({isLoggedIn: false})
+//   }
+
+//   render() {
+//     return (
+//       <>
+//       <BrowserRouter>
+//         <NavigationComponent isLoggedIn={this.state.isLoggedIn} activeUsername={this.state.activeUsername} activePlaylistId={this.state.activePlaylistId} clickLogout={this.state.clickLogout} />
+//         <Switch>
+//           <Route exact path='/user/login'>
+//             <LoginComponent authenticateUser={this.state.authenticateUser} activeUsername={this.state.activeUsername} activeId={this.state.activeId} />
+//           </Route>
+//           <Route exact path='/user/register'>
+//              <RegisterComponent authenticateUser={this.state.authenticateUser} activeUsername={this.state.activeUsername} activeId={this.state.activeId}/>
+//           </Route>
+//           <Route exact path='/playlists'>
+//             <PlaylistsComponent activeUsername={this.state.activeUsername} activeId={this.state.activeId} activePlaylistId={this.state.activePlaylistId} token={this.state.token}/>
+//           </Route>
+//          <Route exact path={`/playist/${this.state.activePlaylistId}`}> 
+//             <PlaylistComponent activePlaylistId={this.state.activePlaylistId} token={this.state.token}/>
+//           </Route> 
+//         </Switch>
+//       </BrowserRouter>
+//       </>
+//     );
+//   };
+// }
+
+// export default App;
