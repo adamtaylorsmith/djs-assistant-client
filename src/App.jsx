@@ -8,6 +8,8 @@ import LoginComponent from './components/auth/Login';
 import RegisterComponent from './components/auth/Register';
 import PlaylistsComponent from './components/app/Playlists';
 import PlaylistComponent from './components/app/Playlist';
+import FooterComponent from './components/app/Footer'
+import HomepageComponent from './components/app/Homepage';
 
 function App() {
 
@@ -41,6 +43,9 @@ function App() {
       <BrowserRouter>
         <NavigationComponent isLoggedIn={isLoggedIn} activeUsername={activeUsername} activePlaylistId={activePlaylistId} clickLogout={clickLogout} />
         <Switch>
+          <Route exact path='/'>
+            <HomepageComponent />
+          </Route>
           <Route exact path='/user/login'>
             <LoginComponent authenticateUser={authenticateUser} setActiveUsername={setActiveUsername} setActiveId={setActiveId} />
           </Route>
@@ -50,10 +55,11 @@ function App() {
           <Route exact path='/playlists'>
             <PlaylistsComponent activeUsername={activeUsername} activeId={activeId} setActivePlaylistId={setActivePlaylistId} activePlaylistId={activePlaylistId} token={token}/>
           </Route>
-         <Route exact path={`/playist/${activePlaylistId}`}> 
+         <Route exact path={`/playlist/${activePlaylistId}`}> 
             <PlaylistComponent activePlaylistId={activePlaylistId} token={token}/>
           </Route> 
         </Switch>
+        <FooterComponent />
       </BrowserRouter>
       </>
     );

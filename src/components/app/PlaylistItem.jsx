@@ -16,7 +16,7 @@ const PlaylistItemComponent = (props) => {
                 <td>{props.key}</td>
                 <td>{props.image}</td>
                 <td>{props.video}</td>
-                <Input type="checkbox" value="xid" onChange={function runFunc() {props.setItemId(props.id)}} />
+                <Input style={{"margin-top": "15px"}} className="checkbox" type="checkbox" value="xid" onChange={function runFunc() {props.setItemId(props.id)}} />
             </tr>
 
         </>

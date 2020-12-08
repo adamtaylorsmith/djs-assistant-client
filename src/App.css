@@ -1,13 +1,17 @@
 body {
     font-family: 'Roboto', sans-serif;
     background-image: url("https://multisportdecathlon.com/images/player.jpg");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-color: black;
+    margin-top: 5px;
 }
 
 .navbar-item {
     font-size: 18px;
     padding-left: 20px;
     margin-top: 10px;
-    width: 120px;
+    width: 170px;
 }
 
 .navi-link {
@@ -17,37 +21,62 @@ body {
     text-decoration: none;
     color: grey;
 }
-
 #brand {
     font-size: 24px;
     color: white;
     padding-top: 15px;
     padding-left: 20px;
 }
-
+footer {
+    color: white;
+    margin-top: 50px;
+    text-align: center;
+}
+footer p {
+    font-size: 21px;
+}
+#hometext {
+    /* height: 500px; */
+    padding-left: 70px;
+    padding-right: 70px;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    padding-top: 80px;
+}
 .form-label {
     color: white;
-    font-size: 24px;
-    padding-left: 46%;
+    font-size: 21px;
 }
 #form-label-spec {
     color: white;
-    font-size: 24px;
-    padding-left: 41%;
+    font-size: 21px;
 }
-
-input[type=text] {
-    width: 33%;
+.form-label-xtraspec {
+    color: white;
+    font-size: 21px;
+}
+.form-input {
+    width: 300px;
+    height: 32px;
+}
+.form-group {
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* input[type=text]{
+    width: 23%;
     margin: auto;
-}
-input[type=email] {
+} */
+/* input[type=email] {
     width: 33%;
     margin: auto;
 }
 input[type=number] {
     width: 33%;
     margin: auto;
-}
+} */
 #register-form {
     padding-top: 30px;
 }
@@ -62,10 +91,19 @@ h1 {
 }
 .form-button {
     margin-left: 47%;
+    background-color: #fe0000;
+}
+.form-button1 {
+    margin-left: 60%;
+    background-color: #fe0000;
+}
+.form-button2 {
+    background-color: #fe0000;
 }
 h3 {
     color: white;
 }
+
 #plural {
     margin-left: 30px;
 }
@@ -93,10 +131,22 @@ td {
     font-size: 20px;
     padding-right: 40px;
 }
-#floats {
+/* #floats {
     width:70%;
     margin-left:30%;
-}
+} */
 .block {
     display: inline-block;
+}
+.checkbox {
+    width: 16px;
+    height: 16px;
+}
+#list-table {
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#body {
+    padding-top: 40px;
 }

@@ -1,5 +1,5 @@
 import React, {Component, useState, useEffect} from 'react';
-import {Table, Button} from 'reactstrap';
+import {Container, Row, Col, Table, Button, Label} from 'reactstrap';
 import APIURL from '../../helpers/environment';
 import PlaylistItemComponent from './PlaylistItem';
 //import queryString from 'query-string'
@@ -18,16 +18,10 @@ const PlaylistComponent = (props) => {
     const [imageSrc, setImageSrc] = useState('')
     const [trackKey, setTrackKey] = useState('')   
     const [videoSrc, setVideoSrc] = useState('')
-    //const [ActivePlaylistItem, setActivePlaylistItem] = useState('')
     const [itemId, setItemId] = useState(0)
     const [placeholderObject,  setPlaceholderObject] = useState({})
-    const [placeholderArray, setPlaceholderArray] = useState({})
-    const [deleteButton, setDeleteButton] = useState(false)
-    const [firePut, setFirePut] = useState() /////// *************************************
-    // const [playlist, setPlaylist] = useState([]);
-    // const [trackId, setTrackId] = useState('')
-    // const [emptyState, setEmptyState] = useState(false);
-     const [blankState, setBlankState] = useState(false);
+    const [firePut, setFirePut] = useState() 
+    //const [blankState, setBlankState] = useState(false);
     const [playlistItem, setPlaylistItem] = useState([])
 
     useEffect(() => {
@@ -35,7 +29,7 @@ const PlaylistComponent = (props) => {
     }, []); 
 
     const fetchUpdatedItemList = () => {
-        fetch(`${APIURL}/playlist/${props.activePlaylistId}`, {  // or maybe props.id?? // or props.playlist_id 
+        fetch(`${APIURL}/playlist/${props.activePlaylistId}`, {   
             method:'GET',                                                                                                       headers: {                                                                             
                 'Content-Type': 'application/json',
                 'Authorization': props.token
@@ -44,14 +38,12 @@ const PlaylistComponent = (props) => {
         }).then(response => response.json())
         .then(data => {
             setPlaylistItem(data.result);
-            // console.log(setPlaylistItem)
-            // console.log(setPlaylistItem.length)
         })
         .catch(error => console.log(error));
     }
 
     const fillPlaceholders = (itemId) => {
-        fetch(`${APIURL}/playlist/${props.activePlaylistId}`, {  // or maybe props.id?? // or props.playlist_id 
+        fetch(`${APIURL}/playlist/${props.activePlaylistId}`, {  
             method:'GET',                                                                                                       headers: {                                                                          
                 'Content-Type': 'application/json',
                 'Authorization': props.token
@@ -60,12 +52,10 @@ const PlaylistComponent = (props) => {
                 playlist_id: props.activePlaylistId}
         }).then(response => response.json())
         .then(data => {
-            //setPlaceholderArray(data.result);
             setPlaceholderObject(data.result[`${itemId}`])
             console.log(itemId)
             console.log(data.result[1])
             console.log(`${itemId}`)
-            // console.log(setPlaylistItem.length)
         })
         .catch(error => console.log(error));  
     }
@@ -98,23 +88,8 @@ const PlaylistComponent = (props) => {
         }
         postNewPlaylistItem(postData)
     }
-    
-        // const postNewPlaylistItem  = (data) => {
-        //     fetch(`http://localhost:5435/playlist/${props.activePlaylistId}`, {
-        //         method: 'POST',
-        //         body: JSON.stringify(data),
-        //         headers: new Headers ({
-        //             'Content-Type': 'application/json',
-        //             'Authorization': props.token
-        //         }) 
-        //     }).then(() => console.log('SUCCESS POSTED'))
-        //     .catch((error) => console.log(error))
-        // }
-        // postNewPlaylistItem(postData)
-    
 
-    const putNewPlaylistItem  = (e) => {
-        e.preventDefault()
+    const putNewPlaylistItem  = () => {
         let putData = {
             artist: databaseArtist,
             title: databaseTrack,
@@ -136,21 +111,9 @@ const PlaylistComponent = (props) => {
                 'Authorization': props.token
             }),
             body: JSON.stringify(putData),
-        }).then(() => console.log('SUCCESS PUTTED'))
+        }).then(() => fetchUpdatedItemList())
         .catch((error) => console.log(error))
     }
-
-    // const deletePlaylist = () => {
-    //     fetch(`https://djs-assistant-b.herokuapp.com/playlists`, { //props.activePlaylistId
-    //         method: 'DELETE',
-    //         headers: new Headers ({
-    //             'Content-Type': 'application/json',
-    //             'Authorization': props.token
-    //         }),
-    //         body: JSON.stringify({id: idNumber})
-    //     }).then(() => fetchUpdatedPlaylistsList())
-    //     .catch(error => console.log(error))       
-    // }
 
     const deletePlaylistItem = () => {
         fetch(`${APIURL}/playlist/${props.activePlaylistId}`, {
@@ -165,8 +128,8 @@ const PlaylistComponent = (props) => {
     }
     
      return(
-        <div>
-         <Table>
+        <div id="body">
+         <Table id="list-table">
              <thead>
                  <tr>
                      <th>Artist:</th>
@@ -182,80 +145,72 @@ const PlaylistComponent = (props) => {
                      <th></th>
                  </tr>
              </thead>
+             <br />
              <tbody>
-        {
-            (playlistItem.length > 0)
-            ? (playlistItem.map(item => {
-                return (
-                    <PlaylistItemComponent
-                        id={item.id}
-                        artist={item.artist}
-                        title={item.title}
-                        year={item.year}
-                        length={item.length}
-                        bpm={item.bpm}
-                        loud={item.loud}
-                        meter={item.meter}
-                        key={item.key}
-                        image={item.image}
-                        video={item.video}
-                        setItemId={setItemId}
-                    />
-                )
-             }) 
-            ) : (
-             <h1>User has none</h1>
-            )
-        }
-        <tr>
-            <td><Button className="form-button" onClick={() => fillPlaceholders(itemId)}>Update placeholders</Button></td>
-            <td><Button className="form-button" onClick={firePost}>POST</Button></td>
-            <td><Button className="form-button" onClick={() => {setFirePut(itemId); setBlankState(true)}}>PUT</Button></td>
-            <td><Button onClick={deletePlaylistItem}>Delete</Button></td>
-            {/* <td><Button className="form-button" onClick={deletePlaylistItem(itemId)}>DELETE</Button></td> */}
-        </tr>
-          
-        </tbody>
-        </Table>
-        <br />
+                {
+                    (playlistItem.length > 0)
+                    ? (playlistItem.map(item => {
+                        return (
+                            <PlaylistItemComponent
+                                id={item.id}
+                                artist={item.artist}
+                                title={item.title}
+                                year={item.year}
+                                length={item.length}
+                                bpm={item.bpm}
+                                loud={item.loud}
+                                meter={item.meter}
+                                key={item.key}
+                                image={item.image}
+                                video={item.video}
+                                setItemId={setItemId}
+                            />
+                        )
+                    }) 
+                    ) : (
+                    <h3>User has none</h3>
+                    )
+                }
+                </tbody>
+            </Table>
+            <br />
+                    {/* <Button className="form-button" onClick={() => fillPlaceholders(itemId)}>Update placeholders</Button> */}
+            <Container>
+                <Row>
+                    <Col>
+                        <Row>
+                            <Col><Label style={{color: "white", fontSize: "18px"}} class="form-label-xtraspec">Complete form and add item:</Label><br /><br /><Button className="form-button" onClick={firePost}>POST</Button></Col>
+                            <Col><Label style={{color: "white", fontSize: "18px"}} class="form-label-xtraspec">Choose item, complete form and update item:</Label><Button className="form-button" onClick={() => {setFirePut(itemId); putNewPlaylistItem()}}>PUT</Button></Col>
+                            <Col><Label style={{color: "white", fontSize: "18px"}} class="form-label-xtraspec">Choose and delete item:</Label><br /><br /><Button className="form-button" onClick={deletePlaylistItem}>DELETE</Button></Col>
+                        </Row>
+                    </Col>
+                    <Col>
+                        <YoutubeFetchComponent 
+                            firePost={firePost}
+                            setDatabaseArtist={setDatabaseArtist}
+                            setDatabaseTrack={setDatabaseTrack}
+                            setTrackLength={setTrackLength}
+                            setTrackYear={setTrackYear}
+                            setTrackBpm={setTrackBpm}
+                            setTrackLoud={setTrackLoud}
+                            setTrackMeter={setTrackMeter}
+                            setImageSrc={setImageSrc}
+                            setTrackKey={setTrackKey}
+                            setVideoSrc={setVideoSrc}
+                            placeholderObject={placeholderObject}
+                        />
+                    </Col>
+                </Row>
 
-        <YoutubeFetchComponent 
-            firePost={firePost}
-            setDatabaseArtist={setDatabaseArtist}
-            setDatabaseTrack={setDatabaseTrack}
-            setTrackLength={setTrackLength}
-            setTrackYear={setTrackYear}
-            setTrackBpm={setTrackBpm}
-            setTrackLoud={setTrackLoud}
-            setTrackMeter={setTrackMeter}
-            setImageSrc={setImageSrc}
-            setTrackKey={setTrackKey}
-            setVideoSrc={setVideoSrc}
-            placeholderObject={placeholderObject}
-        />
-    
+
+                
+            </Container>
         </div>
     )
-    
-    // return (
-    //     <>
-    //     <h1>Playlist name: {props.activePlaylistId}</h1>        {/*  maybe that playlist. is unnecessary or maybe include props. instead */}
-    //     
-    //             {
-    //                 (setPlaylistItem > 0)
-    //              }
-    //             <tr>
-    //                 <th scope="row">Add a new item to your playlist, {props.activePlaylistId}</th>
-    //             </tr>
-    //             <tr>
-    //                 <td>
-    //                   <Button onClick={() => window.location = 'https://djs-assistant-server.herokuapp.com/signin'}>1. Fetch Spotify access token</Button>    
-    //                 </td>
-    //                 <td></td>
-    //                 <td><Button onClick={setEmptyState(true)}>2. Add new item</Button></td>
-    //             </tr> 
-    //         </tbody>
-    //     </Table>
+}
+
+export default PlaylistComponent;
+
 
     //         {
     //             useEffect(() => {
@@ -306,9 +261,8 @@ const PlaylistComponent = (props) => {
             
     //     </>
     // )
-};
 
-export default PlaylistComponent;
+
 
  {/***********************************************************************
     * add newiTEM with SPOTIFY TOKEN / 
@@ -540,3 +494,24 @@ then the user enters track and chooses from list of possible (stretch goal 'any'
 // };
 
 // export default PlaylistComponent;
+
+    
+    // return (
+    //     <>
+    //     <h1>Playlist name: {props.activePlaylistId}</h1>        {/*  maybe that playlist. is unnecessary or maybe include props. instead */}
+    //     
+    //             {
+    //                 (setPlaylistItem > 0)
+    //              }
+    //             <tr>
+    //                 <th scope="row">Add a new item to your playlist, {props.activePlaylistId}</th>
+    //             </tr>
+    //             <tr>
+    //                 <td>
+    //                   <Button onClick={() => window.location = 'https://djs-assistant-server.herokuapp.com/signin'}>1. Fetch Spotify access token</Button>    
+    //                 </td>
+    //                 <td></td>
+    //                 <td><Button onClick={setEmptyState(true)}>2. Add new item</Button></td>
+    //             </tr> 
+    //         </tbody>
+    //     </Table>

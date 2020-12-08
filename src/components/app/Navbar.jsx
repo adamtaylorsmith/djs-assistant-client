@@ -8,8 +8,8 @@ const NavigationComponent = (props) => {
  
     return (
         <>
-            <Navbar light expand="md" className="navbar">
-            <NavbarBrand id="brand">The DJs Assistant</NavbarBrand>
+            <Navbar color="black" expand="md" className="navbar">
+            <NavbarBrand href="/" id="brand">The DJs Assistant</NavbarBrand>
             <NavbarToggler onClick={toggleNavbar} />
             <Collapse isOpen={isOpen} navbar> // {/*{props.activeUsername} */}
                 <Nav className="mr-auto">
@@ -24,7 +24,7 @@ const NavigationComponent = (props) => {
                                 </Col>
                                 <Col>
                                 <NavItem className="navbar-item">
-                                    <Link className="navi-link" to={`/playist/${props.activePlaylistId}`}>{props.activePlaylistId} Playlist</Link>
+                                    <Link className="navi-link" to={`/playlist/${props.activePlaylistId}`}>{props.activePlaylistId} Playlist</Link>
                                 </NavItem>
                                 </Col>
                                 <Col>

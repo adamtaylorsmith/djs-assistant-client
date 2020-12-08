@@ -1,5 +1,5 @@
 import React, {Component, useState, useEffect} from 'react';
-import {Form, Button, FormGroup, Label, Input} from 'reactstrap';
+import {Container, Row, Col, Form, Button, FormGroup, Label, Input} from 'reactstrap';
 import {Link, Route} from 'react-router-dom'
 import APIURL from '../../helpers/environment';
 
@@ -46,7 +46,7 @@ const PlaylistsComponent = (props) => {
                     'Content-Type': 'application/json',
                     'Authorization': props.token
                 },
-                body: JSON.stringify({ // BETTER BODY? 
+                body: JSON.stringify({ 
                     playlist_id: playlistNew
                 })
             }).then(res => res.json())
@@ -71,11 +71,11 @@ const PlaylistsComponent = (props) => {
                 id: idNumber
             })     
         }).then(() => {fetchUpdatedPlaylistsList()
-            props.setActivePlaylistId(playlistUpdate)})  // fetchUpdatedPlaylistsList()
+            props.setActivePlaylistId(playlistUpdate)})  
     }
 
     const deletePlaylist = () => {
-        fetch(`${APIURL}/playlists`, { //props.activePlaylistId
+        fetch(`${APIURL}/playlists`, { 
             method: 'DELETE',
             headers: new Headers ({
                 'Content-Type': 'application/json',
@@ -85,21 +85,10 @@ const PlaylistsComponent = (props) => {
         }).then(() => fetchUpdatedPlaylistsList())
         .catch(error => console.log(error))       
     }
-    
-     
-
-    // const setPlaylistId = () => {
-    //     props.setActivePlaylistId()
-    //     console.log(playlist.playlist_id)
-    //     console.log(props.setActivePlaylistId)
-    // }
-    // const [playlistId, setPlaylistId] = useState('')
-    // console.log(playlistId)
-
 
     return (
         <>
-            <h1>Your Playlists:</h1><br />
+            <h1>{props.activeUsername}'s Playlists:</h1><br />
             <div id="plural">
             {
                 (playlistsList.length > 0) ? (
@@ -107,24 +96,17 @@ const PlaylistsComponent = (props) => {
                         return (
                         <>
                             <tr id="floats">
-                                <td>PLAYLIST NAME:</td>
-                                <td id="playtitle">{playlist.playlist_id}</td>
+                                <td style={{"width":"150px"}}>PLAYLIST NAME:</td>
+                                <td style={{"width":"200px"}} id="playtitle">{playlist.playlist_id}</td>
                                     {/* <td>PLAYLIST LENGTH:</td>
-                                    <td id="playtitle">{playlist.playlist_id} tracks</td> */}
-                                    {/* <td>Tracks length: {playlist.length}</td> */}
-                                <td><Input type="checkbox" value="playlist_id" onClick={function runFunc() {
+                                     <td>Tracks length: {playlist.length}</td> */}
+                                <td><Input className="checkbox" type="checkbox" value="playlist_id" onClick={function runFunc() {
                                         props.setActivePlaylistId(playlist.playlist_id);
                                         setIdName(playlist.playlist_id)
                                         setIdNumber(playlist.id)}} /> 
                                     {/* <Button id="detailsbutton" onClick={props.setActivePlaylistId(playlist.playlist_id)}>PLAYLIST DETAILS</Button> setPlaylistId(playlist.playlist_id) */}
                                 </td>
                             </tr>
-                            <hr />
-                            {/* <Form onSubmit={changePlaylistsName(putPlaylistName)} id="">
-                                    <Label htmlFor="updatePlaylistForm">Update the playlist's name:</Label>
-                                    <Input type="text" name="updatePlaylistForm" id="updatePlaylistForm" onChange={updateNewPlaylistName}></Input>
-                                    <Button>Submit</Button>                  
-                            </Form> */}
                         </>
                         ) 
                     })
@@ -132,21 +114,31 @@ const PlaylistsComponent = (props) => {
                     <h3>User has no playlists</h3>
                 )
             }
-
-            {console.log(playlistsList)}
-            <tr>
-            <td><Button className="form-button" onClick={deletePlaylist}>DELETE</Button></td>
-            </tr>
-            <Form onSubmit={putNewPlaylistsName} id="">
-                    <Label id="form-label-spec" htmlFor="updatePlaylistForm">Update a playlist's name:</Label>
-                    <Input type="text" name="updatePlaylistForm" id="updatePlaylistForm" onChange={(e) => setPlaylistUpdate(e.target.value)}></Input>
-                    <Button className="form-button" type="submit">PUT</Button>                  
-            </Form>
-            <Form onSubmit={postNewPlaylistsName} id="">
-                    <Label id="form-label-spec" htmlFor="newPlaylistForm">Add a new playlist:</Label>
-                    <Input type="text" name="newPlaylistForm" id="newPlaylistForm" onChange={(e) => setPlaylistNew(e.target.value)}></Input>
-                    <Button className="form-button" type="submit">POST</Button>                  
-            </Form>
+            <br /><br />
+            <Container>
+                <Row>
+                    <Col>
+                    <Label style={{color: "white", fontSize: "18px"}} class="form-label-xtraspec" htmlFor="updatePlaylistForm">Choose and delete a playlist:</Label>
+                    <Button className="form-button" onClick={deletePlaylist}>DELETE</Button>
+                    </Col>
+                    <Col>
+                        <Form onSubmit={putNewPlaylistsName} id="">
+                            <Label style={{color: "white", fontSize: "18px"}} class="form-label-xtraspec" htmlFor="updatePlaylistForm">Choose and update a playlist's name:</Label>
+                            <Input style={{"width":"80%"}} type="text" name="updatePlaylistForm" id="updatePlaylistForm" onChange={(e) => setPlaylistUpdate(e.target.value)}></Input>
+                            <Button className="form-button1" type="submit">PUT</Button>                  
+                        </Form>
+                    </Col>
+                    <Col>
+                        <Form onSubmit={postNewPlaylistsName} id="">
+                            <Label style={{color: "white", fontSize: "19 px"}} class="form-label-xtraspec" htmlFor="newPlaylistForm">Add a new playlist:</Label>
+                            <Input style={{"width":"80%"}} type="text" name="newPlaylistForm" id="newPlaylistForm" onChange={(e) => setPlaylistNew(e.target.value)}></Input>
+                            <Button className="form-button1" type="submit">POST</Button>                  
+                        </Form>
+                    </Col>
+                </Row>
+            </Container>
+            
+            <br />
             </div>
         </>
     )
@@ -272,3 +264,14 @@ export default PlaylistsComponent;
 // };
 
 // export default PlaylistsComponent;
+
+    
+     
+
+    // const setPlaylistId = () => {
+    //     props.setActivePlaylistId()
+    //     console.log(playlist.playlist_id)
+    //     console.log(props.setActivePlaylistId)
+    // }
+    // const [playlistId, setPlaylistId] = useState('')
+    // console.log(playlistId)

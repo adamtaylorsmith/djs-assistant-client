@@ -1,6 +1,5 @@
 import React, {Component, useState} from 'react';
 import {Button, Form, FormGroup, Label, Input} from 'reactstrap';
-//import './App.css';
 import APIURL from '../../helpers/environment';
 
 const LoginComponent = (props) => {
@@ -24,8 +23,6 @@ const LoginComponent = (props) => {
             .then(body => {props.authenticateUser(body.token)
                 props.setActiveUsername(username)
                 props.setActiveId(body.message)
-                console.log(body.message)
-               // props.setActiveId(user.id)
                 console.log('YOU ARE LOGGED IN SON')})
             .catch(error => console.log(error));
         } 
@@ -38,12 +35,10 @@ const LoginComponent = (props) => {
             <FormGroup>
                 <Label className="form-label" htmlFor='username'>Username:</Label>
                 <Input className="form-input" onChange={usernameChange} value={username} id='username' type='text' name='username'></Input>
-                {/* {username.length < 4 ? <span>Must be 4 characters or more</span> : null} */}
             </FormGroup>
             <FormGroup>
                 <Label className="form-label" htmlFor='password'>Password:</Label>
                 <Input className="form-input" onChange={passwordChange} value={password} id='password' type='text' name='password'></Input>
-                {/* {password.length < 4 ? <span>Must be 4 characters or more</span> : null} */}
             </FormGroup>
             <Button className="form-button">SUBMIT</Button>
         </Form>
